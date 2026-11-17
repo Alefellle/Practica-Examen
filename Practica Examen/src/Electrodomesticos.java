@@ -6,8 +6,8 @@ import java.util.function.Consumer;
 public abstract class Electrodomesticos {
 	
 	private String modelo = "Desconocido";
-	private double Precio_base = 100;
-	char consumo_energetico = 'F';
+	private double precio_base = 100;
+	protected char consumo_energetico = 'F';
 	private int peso = 5;
 	
 	public static HashMap<Character,Integer > consumo = new HashMap<>();
@@ -23,13 +23,58 @@ public abstract class Electrodomesticos {
 		consumo.put('F',10);
 	}
 	
+	private  void comprobarConsumo(char letra) {
+		
+		letra = Character.toUpperCase(letra);
+		
+		if (consumo.containsKey(letra)) {
+			this.consumo_energetico =  letra;
+		}else {
+			this.consumo_energetico = 'F';
+		}
+	}
 	
+	private double incrementoPrecio() {
+		//A 100€
+		//B 80€
+		//C 60€
+		//D 50€
+		//E 30€
+		//F 10€
+		
+		//peso 		// precio
+		// 0 - 19		10
+		// 20 - 49		50 
+		// 50 - 79		80
+		// + 80			100
+		double incremento = 0;
+	
+		
+		if (consumo.containsKey(consumo_energetico) && consumo.isEmpty()) {
+			incremento += consumo.get(this.consumo_energetico); 
+		}
+		
+		
+		if (this.peso >= 0 && this.peso <= 19 ) {
+			incremento += 10;
+		}else if (this.peso >= 20 && this.peso <= 49 ) {
+			incremento += 50;
+		}else if (this.peso >= 50 && this.peso <= 79 ) {
+			incremento += 80;
+		}else if (this.peso >= 0  ) {
+			incremento += 100;
+		}
+		
+		
+		return incremento;
+		
+		}
 	
 
 	
 	
 	public Electrodomesticos() {
-		
+		super();
 	}
 
 
@@ -38,9 +83,12 @@ public abstract class Electrodomesticos {
 
 	public Electrodomesticos(String modelo, double precio_base, char consumo_energetico, int peso) {
 		this.modelo = modelo ;
-		this.Precio_base = precio_base ;
+		this.precio_base = precio_base ;
 		this.consumo_energetico = consumo_energetico;
 		this.peso = peso;
+		
+		comprobarConsumo(consumo_energetico);
+		ntotalelectrodomesticos++;
 	}
 
 
@@ -67,7 +115,7 @@ public abstract class Electrodomesticos {
 
 
 	public double getPrecio_base() {
-		return Precio_base;
+		return precio_base;
 	}
 
 
@@ -76,7 +124,7 @@ public abstract class Electrodomesticos {
 
 
 	public void setPrecio_base(double precio_base) {
-		Precio_base = precio_base;
+		precio_base = precio_base;
 	}
 
 

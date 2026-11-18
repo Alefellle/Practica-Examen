@@ -34,19 +34,7 @@ public abstract class Electrodomesticos {
 		}
 	}
 	
-	private double incrementoPrecio() {
-		//A 100€
-		//B 80€
-		//C 60€
-		//D 50€
-		//E 30€
-		//F 10€
-		
-		//peso 		// precio
-		// 0 - 19		10
-		// 20 - 49		50 
-		// 50 - 79		80
-		// + 80			100
+	public double  incrementoPrecio() {
 		double incremento = 0;
 	
 		
@@ -197,6 +185,12 @@ public abstract class Electrodomesticos {
 
 	public static void setNtotalelectrodomesticos(int ntotalelectrodomesticos) {
 		Electrodomesticos.ntotalelectrodomesticos = ntotalelectrodomesticos;
+	}
+
+	@Override
+	public String toString() {
+		return "Electrodomesticos [modelo=" + modelo + ", precio_base=" + precio_base + ", consumo_energetico="
+				+ consumo_energetico + ", peso=" + peso + "]";
 	}
 	
 	

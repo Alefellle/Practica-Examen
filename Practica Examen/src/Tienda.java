@@ -95,8 +95,7 @@ public class Tienda {
 
 	 private static void Agregarlavadora() {
 		try {
-			String lavadora= entrada.readLine();
-			lavadoras.add(lavadora);
+			Lavadora nuevaLavadora = new Lavadora(modelo,precio,consumo,peso,carga);
 			System.out.println("Lavadora añadida correctamente");
 		} catch (Exception e) {
 			System.out.println("Debes poner un numero del 1 al 7");

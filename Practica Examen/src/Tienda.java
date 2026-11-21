@@ -2,6 +2,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import sun.security.util.Cache.EqualByteArray;
 
 public class Tienda {
 	static BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
@@ -71,11 +74,10 @@ public class Tienda {
 	                                  
 	                case 7:
 	                    System.out.println("Saliendo del programa..."); // este es el ultimo i es para salir del programa 
-	                    MostrarNLavadoras();
 	                    break; 
 	                    
 	                default:
-	                    System.out.println("Opción no válida. Debes elegir entre 1 y 9." + "\n");
+	                    System.out.println("Opción no válida. Debes elegir entre 1 y 7." + "\n");
 	                    break;
 	            }
 	        } while (eleccion != 7);
@@ -90,15 +92,44 @@ public class Tienda {
 		}
 		 return estavacia;
 	 }
+	 
+	 private static Lavadora localizarPormodelo(String modelo) {
+		 for (Lavadora lavadora : lavadoras) {
+			if (lavadora.getModelo().equalsIgnoreCase(modelo)) {
+				return lavadora;
+			}
+		}
+		 return null;
+	 }
 
 	
 
 	 private static void Agregarlavadora() {
+		 if (ComprobarLista()) return;
+		 
 		try {
+			System.out.println("Dime que modelo es: ");
+			String modelo = entrada.readLine();
+			
+			System.out.println("Dime el precio que tiene: ");
+			double precio = Double.parseDouble(entrada.readLine());
+			
+			System.out.println("Dime el consumo que tiene: ");
+			char consumo = entrada.readLine().charAt(0);
+			
+			System.out.println("Dime el peso que tiene: ");
+			int peso = Integer.parseInt(entrada.readLine());
+			
+			System.out.println("Dime la carga que es: ");
+			double carga = Double.parseDouble(entrada.readLine());
+			
+			
+			
 			Lavadora nuevaLavadora = new Lavadora(modelo,precio,consumo,peso,carga);
+			lavadoras.add(nuevaLavadora);
 			System.out.println("Lavadora añadida correctamente");
 		} catch (Exception e) {
-			System.out.println("Debes poner un numero del 1 al 7");
+			System.out.println("Debes introducir los valores correctamente");
 		}
 		
 	}
@@ -106,14 +137,50 @@ public class Tienda {
 	 
 
 	 private static void BuscarLavadora() throws IOException {
-		String lavadoraBus = entrada.readLine();
+		 if (ComprobarLista()) return;
+			
+				 
+		 try {
+			 System.out.println("Dime el modelo de lavadora: ");
+			String lavadorabuscar = entrada.readLine();
+			
+			Lavadora encontrada = localizarPormodelo(lavadorabuscar);
 		
-		
-		
+			if (encontrada != null) {
+				System.out.println("La lavadora esta " +encontrada);
+			}
+			else {
+				System.out.println("La lavadora no esta en la tienda");
+			}
+			
+			
+		} catch (Exception e) {
+			System.out.println("Error al leer el caracter/numero");
+		} 
+		 
 	}
 
 	 private static void ModificarLavadora() {
-		// TODO Auto-generated method stub
+		 if (ComprobarLista()) return;
+		 
+		 try {
+			 System.out.println("Dime el modelo que quieres modificar");
+			 String lavadoramodificar = entrada.readLine();
+			 
+			 Lavadora encontrada = localizarPormodelo(lavadoramodificar);
+			 
+			 if (encontrada != null) {
+				 System.out.println("Dime el nuevo precio base: ");
+				 double nuevopreciobase = Double.parseDouble(entrada.readLine());
+				 lavadoras.set(lavadoramodificar,(double) nuevopreciobase);
+				 System.out.println("Lavadora modificada correctamente");
+				}else {
+					System.out.println("La lavadora no esta en la tienda");
+				}
+			
+		} catch (Exception e) {
+			System.out.println("Error al leer el caracter/numero");
+		}
 		
 	}
 
@@ -123,7 +190,7 @@ public class Tienda {
 	}
 
 	 private static void MostrarLavadoras() {
-		// TODO Auto-generated method stub
+		System.out.println("");
 		
 	 }
 	 private static void MostrarNLavadoras() {
